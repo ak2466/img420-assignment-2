@@ -1,5 +1,6 @@
 #include "register_types.h"
 
+#include "fading_sprite.h" // Fading sprite header
 #include "gdexample.h"
 
 #include <gdextension_interface.h>
@@ -14,6 +15,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	}
 
 	GDREGISTER_RUNTIME_CLASS(GDExample);
+	GDREGISTER_RUNTIME_CLASS(FadingSprite); // Initialize fading sprite runtime class
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

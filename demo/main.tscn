@@ -1,15 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://daovqrcmy77qu"]
+[gd_scene load_steps=4 format=3 uid="uid://daovqrcmy77qu"]
 
 [ext_resource type="Script" uid="uid://bxfhh25kwr5i6" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://dgjjpkornvgbu" path="res://icon.svg" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cqmrlb4rmckce" path="res://fading_sprite.gd" id="3_h2yge"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0xm2m")
 
-[node name="GDExample" type="GDExample" parent="."]
-amplitude = 100.0
-speed = 20.0
+[node name="FadingSprite" type="FadingSprite" parent="."]
+position = Vector2(548, 261)
 texture = ExtResource("1_ig7tw")
 centered = false
-
-[connection signal="position_changed" from="GDExample" to="." method="_on_gd_example_position_changed"]
+script = ExtResource("3_h2yge")

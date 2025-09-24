@@ -1,8 +1,7 @@
 extends Node
 
-func _on_Sprite2D_position_changed(node, new_pos):
-	print("The position of " + node.get_class() + " is now " + str(new_pos))
+@onready var fading_sprite_node = $FadingSprite
 
-
-func _on_gd_example_position_changed(node: Object, new_pos: Vector2) -> void:
-	print("The position of " + node.get_class() + " is now " + str(new_pos))
+func _ready():
+	fading_sprite_node.set_rotation_angle(45)
+	fading_sprite_node.start_fade()
