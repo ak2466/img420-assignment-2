@@ -21,6 +21,7 @@ private:
     double animation_duration;
     double animation_timer;
     Vector2 max_size;
+    Vector2 start_scale;
 
 protected:
     static void _bind_methods();
@@ -30,6 +31,7 @@ public:
     ~PopSprite();
 
     void _process(double delta) override;
+    void _enter_tree() override;
     void start_animation();
 
     void set_animation_duration(const double p_animation_duration);

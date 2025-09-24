@@ -21,11 +21,17 @@ void PopSprite::_bind_methods() {
 }
 
 PopSprite::PopSprite() {
-
 }
 
 PopSprite::~PopSprite() {
     // Cleanup if needed
+}
+
+void PopSprite::_enter_tree() {
+    Vector2 start_scale = get_scale();
+
+    godot::UtilityFunctions::print(godot::String("Start scale x: ") + godot::String::num(start_scale.x));
+    godot::UtilityFunctions::print(godot::String("Start scale y: ") + godot::String::num(start_scale.y));
 }
 
 void PopSprite::_process(double delta) {
@@ -65,9 +71,15 @@ void PopSprite::_process(double delta) {
             // Emit the animation complete signal
             //emit_signal("fade_complete");
         }
-    }
 
-    set_scale(max_size);
+        // Calculate scale
+        Vector2 current_size;
+
+        current_size.x = max_size.x * completion_ratio;
+        current_size.y = max_size.y * completion_ratio;
+
+        set_scale(current_size);
+    }
 
 }
 
