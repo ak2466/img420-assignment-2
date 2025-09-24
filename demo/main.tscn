@@ -9,6 +9,7 @@ script = ExtResource("1_0xm2m")
 
 [node name="FadingSprite" type="FadingSprite" parent="."]
 rotation_angle = 360.0
+reverse_animation = true
 position = Vector2(548, 261)
 texture = ExtResource("1_ig7tw")
 script = ExtResource("3_h2yge")
