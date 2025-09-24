@@ -96,11 +96,8 @@ void FadingSprite::_process(double delta) {
         // Calculate remaining rotation amount
         double remaining_rotation = rotation_angle * (1.0 - completion_ratio);
 
-        // Convert it to radians
-        double rotation_radians = remaining_rotation * (PI / 180);
-
         // Set the rotation
-        set_rotation(rotation_radians);
+        set_rotation_degrees(remaining_rotation);
     }
 }
 

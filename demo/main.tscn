@@ -13,3 +13,8 @@ reverse_animation = true
 position = Vector2(548, 261)
 texture = ExtResource("1_ig7tw")
 script = ExtResource("3_h2yge")
+
+[node name="PopSprite" type="PopSprite" parent="."]
+max_size = Vector2(124.72, 3.24)
+position = Vector2(218, 352)
+texture = ExtResource("1_ig7tw")
