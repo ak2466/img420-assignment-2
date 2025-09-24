@@ -21,6 +21,7 @@ void PopSprite::_bind_methods() {
 }
 
 PopSprite::PopSprite() {
+    start_scale = Vector2(1.0, 1.0);
 }
 
 PopSprite::~PopSprite() {
@@ -28,7 +29,7 @@ PopSprite::~PopSprite() {
 }
 
 void PopSprite::_enter_tree() {
-    Vector2 start_scale = get_scale();
+    start_scale = get_scale();
 
     godot::UtilityFunctions::print(godot::String("Start scale x: ") + godot::String::num(start_scale.x));
     godot::UtilityFunctions::print(godot::String("Start scale y: ") + godot::String::num(start_scale.y));
@@ -75,8 +76,11 @@ void PopSprite::_process(double delta) {
         // Calculate scale
         Vector2 current_size;
 
-        current_size.x = max_size.x * completion_ratio;
-        current_size.y = max_size.y * completion_ratio;
+        current_size.x = start_scale.x + ((max_size.x - start_scale.x) * completion_ratio);
+        current_size.y = start_scale.y + ((max_size.y - start_scale.y) * completion_ratio);
+
+        godot::UtilityFunctions::print(godot::String("Current x: ") + godot::String::num(current_size.x));
+        godot::UtilityFunctions::print(godot::String("Current y: ") + godot::String::num(current_size.y));
 
         set_scale(current_size);
     }
