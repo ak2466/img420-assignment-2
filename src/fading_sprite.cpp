@@ -8,23 +8,23 @@ const double PI = 3.141592653;
 using namespace godot;
 
 void FadingSprite::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("get_fade_duration"), &FadingSprite::get_fade_duration);
-    ClassDB::bind_method(D_METHOD("set_fade_duration", "p_fade_duration"), &FadingSprite::set_fade_duration);
+    ClassDB::bind_method(D_METHOD("get_animation_duration"), &FadingSprite::get_animation_duration);
+    ClassDB::bind_method(D_METHOD("set_animation_duration", "p_animation_duration"), &FadingSprite::set_animation_duration);
 
     ClassDB::bind_method(D_METHOD("get_rotation_angle"), &FadingSprite::get_rotation_angle);
     ClassDB::bind_method(D_METHOD("set_rotation_angle", "p_rotation_angle"), &FadingSprite::set_rotation_angle);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "fade_duration", PROPERTY_HINT_RANGE, "0.1,5.0,0.01"), "set_fade_duration", "get_fade_duration");
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rotation_angle", PROPERTY_HINT_RANGE, "0.1,5.0,0.01"), "set_rotation_angle", "get_rotation_angle");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rotation_angle", PROPERTY_HINT_RANGE, "0.0,360.0,0.01"), "set_rotation_angle", "get_rotation_angle");
 
-    ADD_SIGNAL(MethodInfo("fade_complete"));
-    ClassDB::bind_method(D_METHOD("start_fade"), &FadingSprite::start_fade);
+    ADD_SIGNAL(MethodInfo("animation_complete"));
+    ClassDB::bind_method(D_METHOD("start_animation"), &FadingSprite::start_animation);
 }
 
 FadingSprite::FadingSprite() {
-    is_fading = false;
-    fade_duration = 1.0;
-    fade_timer = 0.0;
+    is_animating = false;
+    animation_duration = 1.0;
+    animation_timer = 0.0;
     rotation_angle = 0.0;
 }
 
@@ -35,41 +35,43 @@ FadingSprite::~FadingSprite() {
 void FadingSprite::_process(double delta) {
 
     // Define variables
-    double rotation_angle_radians;
+    // Define animation completion ratio
+    double completion_ratio = animation_timer / animation_duration;
 
-    if (is_fading) {
-        fade_timer += delta;
+    if (is_animating) {
+        animation_timer += delta;
 
-        double new_alpha = 1.0 - (fade_timer / fade_duration);
+        double new_alpha = completion_ratio;
 
-        if (new_alpha <= 0.0) {
-            new_alpha = 0.0;
-            is_fading = false;
+        if (completion_ratio >= 1.0) {
+            completion_ratio = 1.0;
+            is_animating = false;
             emit_signal("fade_complete");
         }
-
-        godot::UtilityFunctions::print(godot::String("Current alpha: ") + godot::String::num(new_alpha));
 
         Color current_color = get_modulate();
         current_color.a = new_alpha;
         set_modulate(current_color);
+
+        godot::UtilityFunctions::print(godot::String("Completion ratio: ") + godot::String::num(completion_ratio));
+
+        double remaining_rotation = rotation_angle * (1.0 - completion_ratio);
+        double rotation_radians = remaining_rotation * (PI / 180);
+        set_rotation(rotation_radians);
     }
-
-    rotation_angle_radians = rotation_angle * (PI / 180);
-    set_rotation(rotation_angle_radians);
 }
 
-void FadingSprite::set_fade_duration(const double p_fade_duration) {
-    fade_duration = p_fade_duration;
+void FadingSprite::set_animation_duration(const double p_animation_duration) {
+    animation_duration = p_animation_duration;
 }
 
-double FadingSprite::get_fade_duration() const {
-    return fade_duration;
+double FadingSprite::get_animation_duration() const {
+    return animation_duration;
 }
 
-void FadingSprite::start_fade() {
-    is_fading = true;
-    fade_timer = 0.0;
+void FadingSprite::start_animation() {
+    is_animating = true;
+    animation_timer = 0.0;
 }
 
 void FadingSprite::set_rotation_angle(const double p_rotation_angle) {

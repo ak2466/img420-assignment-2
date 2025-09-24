@@ -1,9 +1,0 @@
-ea4bc82a6ad023ab7ee23ee620429895
-::res://::1758691177
-fading_sprite.gd::GDScript::5921687329364628000::1758652639::0::1::::<>FadingSprite<><>0<>0<><>::
-icon.svg::CompressedTexture2D/CompressedTexture2D::7599548300188877286::1758597627::1758597721::1::::<><><>0<>0<>57b2f09bf84da29eec36c2a241a06f23<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-main.gd::GDScript::4011524960603887439::1758652515::0::1::::<>Node<><>0<>0<><>::
-main.tscn::PackedScene::7189467865751867828::1758652640::0::1::::<><><>0<>0<><>::uid://bxfhh25kwr5i6::::res://main.gd<>uid://dgjjpkornvgbu::::res://icon.svg<>uid://cqmrlb4rmckce::::res://fading_sprite.gd
-::res://bin/::1758597721
-gdexample.gdextension::GDExtension/GDExtension::1547781757587608802::1758584731::0::1::::<><><>0<>0<><>::
-::res://bin/libgdexample.macos.template_debug.framework/::1758652058

@@ -15,9 +15,9 @@ class FadingSprite : public Sprite2D {
     GDCLASS(FadingSprite, Sprite2D);
 
 private:
-    bool is_fading;
-    double fade_duration;
-    double fade_timer;
+    bool is_animating;
+    double animation_duration;
+    double animation_timer;
     double rotation_angle;
 
 protected:
@@ -28,10 +28,10 @@ public:
     ~FadingSprite();
 
     void _process(double delta) override;
-    void start_fade();
+    void start_animation();
 
-    void set_fade_duration(const double p_fade_duration);
-    double get_fade_duration() const;
+    void set_animation_duration(const double p_animation_duration);
+    double get_animation_duration() const;
 
     void set_rotation_angle(const double p_rotation_angle);
     double get_rotation_angle() const;
