@@ -1,3 +1,4 @@
 godot-cpp/
 demo/.godot/
 .sconsign.dblite
+*.os
