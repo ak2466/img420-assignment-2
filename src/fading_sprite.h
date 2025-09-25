@@ -40,7 +40,7 @@ public:
     FadingSprite();
     ~FadingSprite();
 
-    void _process(double delta) override;
+    void _physics_process(double delta) override;
     void _enter_tree() override;
     void start_animation();
 

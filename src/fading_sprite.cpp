@@ -76,7 +76,7 @@ void FadingSprite::_enter_tree() {
     godot::UtilityFunctions::print(godot::String("Start scale y: ") + godot::String::num(start_scale.y));
 }
 
-void FadingSprite::_process(double delta) {
+void FadingSprite::_physics_process(double delta) {
 
     // Define variables
     // Define animation completion ratio

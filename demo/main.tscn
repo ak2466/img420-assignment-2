@@ -153,17 +153,17 @@ shape = SubResource("RectangleShape2D_cm0pq")
 position = Vector2(81.6667, 60)
 texture = ExtResource("1_uu6xs")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
 position = Vector2(-330, 33)
 script = ExtResource("2_r0du0")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(194, -154)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_w3rk5")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(198.5, -149.5)
 shape = SubResource("RectangleShape2D_fos0i")
 
@@ -199,13 +199,13 @@ position = Vector2(621.04, -171.04)
 scale = Vector2(0.0545313, 0.0545313)
 texture = ExtResource("12_dg77c")
 
-[connection signal="pause_requested" from="CanvasLayer/PauseMenu" to="CharacterBody2D" method="_on_pause_menu_pause_requested"]
-[connection signal="start_game" from="CanvasLayer/WinScreen" to="CharacterBody2D" method="_on_win_screen_start_game"]
-[connection signal="pressed" from="CanvasLayer/PauseButton" to="CharacterBody2D" method="_on_pause_button_pressed"]
+[connection signal="pause_requested" from="CanvasLayer/PauseMenu" to="Player" method="_on_pause_menu_pause_requested"]
+[connection signal="start_game" from="CanvasLayer/WinScreen" to="Player" method="_on_win_screen_start_game"]
+[connection signal="pressed" from="CanvasLayer/PauseButton" to="Player" method="_on_pause_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="ExtendTimeArea" to="CharacterBody2D" method="_on_extend_time_area_body_entered"]
+[connection signal="body_entered" from="ExtendTimeArea" to="Player" method="_on_extend_time_area_body_entered"]
 [connection signal="body_entered" from="ExtendTimeArea" to="ExtendTimeArea" method="_on_body_entered"]
 [connection signal="area_entered" from="WinArea" to="CanvasLayer/FailedMenu" method="_on_win_area_area_entered"]
-[connection signal="area_entered" from="WinArea" to="CharacterBody2D" method="_on_win_area_area_entered"]
-[connection signal="body_entered" from="WinArea" to="CharacterBody2D" method="_on_win_area_body_entered"]
+[connection signal="area_entered" from="WinArea" to="Player" method="_on_win_area_area_entered"]
+[connection signal="body_entered" from="WinArea" to="Player" method="_on_win_area_body_entered"]
 [connection signal="body_entered" from="WinArea" to="WinArea" method="_on_body_entered"]
