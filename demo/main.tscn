@@ -9,14 +9,8 @@ script = ExtResource("1_0xm2m")
 
 [node name="FadingSprite" type="FadingSprite" parent="."]
 rotation_angle = 360.0
+max_size = Vector2(1.5, 1.5)
 reverse_animation = true
 position = Vector2(548, 261)
 texture = ExtResource("1_ig7tw")
 script = ExtResource("3_h2yge")
-
-[node name="PopSprite" type="PopSprite" parent="."]
-animation_duration = 2.32
-max_size = Vector2(45, 2)
-reverse_animation = true
-position = Vector2(218, 352)
-texture = ExtResource("1_ig7tw")
