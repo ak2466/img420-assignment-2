@@ -100,7 +100,7 @@ void FadingSprite::_process(double delta) {
             is_animating = false;
 
             // Emit the fade complete signal
-            emit_signal("fade_complete");
+            emit_signal("animation_complete");
         }
 
         // Get current color
