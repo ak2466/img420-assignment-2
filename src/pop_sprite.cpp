@@ -22,6 +22,9 @@ void PopSprite::_bind_methods() {
 
 PopSprite::PopSprite() {
     start_scale = Vector2(1.0, 1.0);
+
+    // Calculate scale
+    current_scale = Vector2(1.0, 1.0);
 }
 
 PopSprite::~PopSprite() {
@@ -29,7 +32,16 @@ PopSprite::~PopSprite() {
 }
 
 void PopSprite::_enter_tree() {
-    start_scale = get_scale();
+
+    if(reverse_animation) {
+        start_scale = max_size;
+        end_scale = get_scale();
+    }
+    else {
+
+        start_scale = get_scale();
+        end_scale = max_size;
+    }
 
     godot::UtilityFunctions::print(godot::String("Start scale x: ") + godot::String::num(start_scale.x));
     godot::UtilityFunctions::print(godot::String("Start scale y: ") + godot::String::num(start_scale.y));
@@ -41,19 +53,7 @@ void PopSprite::_process(double delta) {
     // Define animation completion ratio
     double completion_ratio = -1.0;
 
-    // Check if reverse animation is enabled
-    if(reverse_animation)
-    {
-        // If it is, reverse the completion ratio 
-        completion_ratio = 1.0 - (animation_timer / animation_duration);
-    }
-
-    // Otherwise
-    else
-    {
-        // Calculate the completion_ratio normally
-        completion_ratio = animation_timer / animation_duration;
-    }
+    completion_ratio = animation_timer / animation_duration;
 
     if(is_animating) {
 
@@ -61,7 +61,7 @@ void PopSprite::_process(double delta) {
         animation_timer += delta;
 
         // Check if completion ratio is over or under recommended range
-        if (completion_ratio > 1.0 || completion_ratio < 0.0) {
+        if (completion_ratio >= 1.0) {
 
             // Reset completion ratio (change this to accept 0.0 when reversed)
             completion_ratio = 1.0;
@@ -70,19 +70,17 @@ void PopSprite::_process(double delta) {
             is_animating = false;
 
             // Emit the animation complete signal
-            //emit_signal("fade_complete");
+            emit_signal("fade_complete");
         }
 
-        // Calculate scale
-        Vector2 current_size;
+        current_scale.x = start_scale.x + ((end_scale.x - start_scale.x) * completion_ratio);
+        current_scale.y = start_scale.y + ((end_scale.y - start_scale.y) * completion_ratio);
 
-        current_size.x = start_scale.x + ((max_size.x - start_scale.x) * completion_ratio);
-        current_size.y = start_scale.y + ((max_size.y - start_scale.y) * completion_ratio);
+        godot::UtilityFunctions::print(godot::String("Completion ratio") + godot::String::num(completion_ratio));
+        godot::UtilityFunctions::print(godot::String("Current x: ") + godot::String::num(current_scale.x));
+        godot::UtilityFunctions::print(godot::String("Current y: ") + godot::String::num(current_scale.y));
 
-        godot::UtilityFunctions::print(godot::String("Current x: ") + godot::String::num(current_size.x));
-        godot::UtilityFunctions::print(godot::String("Current y: ") + godot::String::num(current_size.y));
-
-        set_scale(current_size);
+        set_scale(current_scale);
     }
 
 }

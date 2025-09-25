@@ -22,6 +22,8 @@ private:
     double animation_timer;
     Vector2 max_size;
     Vector2 start_scale;
+    Vector2 current_scale;
+    Vector2 end_scale;
 
 protected:
     static void _bind_methods();
