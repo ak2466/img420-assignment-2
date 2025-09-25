@@ -71,9 +71,6 @@ void FadingSprite::_enter_tree() {
         start_opacity = get_modulate().a;
         end_opacity = 0.0;
     }
-
-    godot::UtilityFunctions::print(godot::String("Start scale x: ") + godot::String::num(start_scale.x));
-    godot::UtilityFunctions::print(godot::String("Start scale y: ") + godot::String::num(start_scale.y));
 }
 
 void FadingSprite::_physics_process(double delta) {
@@ -114,8 +111,6 @@ void FadingSprite::_physics_process(double delta) {
         // Set sprite to current color
         set_modulate(current_color);
 
-        // DEBUG: console log rotation angle
-
         // Calculate remaining rotation amount
         double remaining_rotation = start_rotation + ((end_rotation - start_rotation) * completion_ratio);
 
@@ -124,11 +119,6 @@ void FadingSprite::_physics_process(double delta) {
 
         current_scale.x = start_scale.x + ((end_scale.x - start_scale.x) * completion_ratio);
         current_scale.y = start_scale.y + ((end_scale.y - start_scale.y) * completion_ratio);
-
-        godot::UtilityFunctions::print(godot::String("Completion ratio: ") + godot::String::num(completion_ratio));
-        godot::UtilityFunctions::print(godot::String("End rotation: ") + godot::String::num(end_rotation));
-        godot::UtilityFunctions::print(godot::String("Current x: ") + godot::String::num(current_scale.x));
-        godot::UtilityFunctions::print(godot::String("Current y: ") + godot::String::num(current_scale.y));
 
         set_scale(current_scale);
     }
