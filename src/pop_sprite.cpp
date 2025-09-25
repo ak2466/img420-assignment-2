@@ -60,6 +60,9 @@ void PopSprite::_process(double delta) {
         // Add delta (current diff in frames) to animation timer
         animation_timer += delta;
 
+        // Set new alpha to the completion ratio
+        double new_alpha = completion_ratio;
+
         // Check if completion ratio is over or under recommended range
         if (completion_ratio >= 1.0) {
 
@@ -72,6 +75,15 @@ void PopSprite::_process(double delta) {
             // Emit the animation complete signal
             emit_signal("fade_complete");
         }
+
+        // Get current color
+        Color current_color = get_modulate();
+
+        // Change its alpha
+        current_color.a = new_alpha;
+
+        // Set sprite to current color
+        set_modulate(current_color);
 
         current_scale.x = start_scale.x + ((end_scale.x - start_scale.x) * completion_ratio);
         current_scale.y = start_scale.y + ((end_scale.y - start_scale.y) * completion_ratio);
