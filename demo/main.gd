@@ -3,6 +3,8 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -500.0
 
+signal game_started
+
 @onready var pause_menu = get_node("/root/Node2D/CanvasLayer/PauseMenu")
 @onready var failed_menu = get_node("/root/Node2D/CanvasLayer/FailedMenu")
 @onready var timer = get_node("/root/Node2D/Timer")
@@ -119,6 +121,9 @@ func start_game():
 	
 	# Reset time scale
 	Engine.time_scale = 1
+	
+	# Emit the game started signal
+	emit_signal("game_started")
 	
 	# Start the timer
 	timer.start()

@@ -7,10 +7,11 @@ const double PI = 3.141592653;
 
 using namespace godot;
 
+// Class bindings
 void FadingSprite::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_animation_duration"), &FadingSprite::get_animation_duration);
     ClassDB::bind_method(D_METHOD("set_animation_duration", "p_animation_duration"), &FadingSprite::set_animation_duration);
-    ClassDB::bind_method(D_METHOD("start_animation"), &FadingSprite::start_animation);
+    ClassDB::bind_method(D_METHOD("start_animation", "p_reverse_animation", "p_reverse_fade"), &FadingSprite::start_animation);
 
     ClassDB::bind_method(D_METHOD("get_rotation_angle"), &FadingSprite::get_rotation_angle);
     ClassDB::bind_method(D_METHOD("set_rotation_angle", "p_rotation_angle"), &FadingSprite::set_rotation_angle);
@@ -24,12 +25,12 @@ void FadingSprite::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_reverse_fade"), &FadingSprite::get_reverse_fade);
     ClassDB::bind_method(D_METHOD("set_reverse_fade", "p_reverse_fade"), &FadingSprite::set_reverse_fade);
 
+    // Add properties to editor
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "animation_duration", PROPERTY_HINT_RANGE, "0.1,5.0,0.01"), "set_animation_duration", "get_animation_duration");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rotation_angle", PROPERTY_HINT_RANGE, "0.0,360.0,0.01"), "set_rotation_angle", "get_rotation_angle");
     ADD_PROPERTY(PropertyInfo(Variant::VECTOR2, "max_size", PROPERTY_HINT_RANGE, "0.0,360.0,0.01"), "set_max_size", "get_max_size");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "reverse_animation", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT), "set_reverse_animation", "get_reverse_animation");
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "reverse_fade", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT), "set_reverse_fade", "get_reverse_fade");
 
+    // Add signal to editor
     ADD_SIGNAL(MethodInfo("animation_complete"));
 }
 
@@ -43,34 +44,6 @@ FadingSprite::FadingSprite() {
 
 FadingSprite::~FadingSprite() {
     // Cleanup if needed
-}
-
-void FadingSprite::_enter_tree() {
-
-    if(reverse_animation) {
-        start_scale = max_size;
-        end_scale = get_scale();
-
-        start_rotation = get_rotation_degrees();
-        end_rotation = rotation_angle;
-    }
-    else {
-
-        start_scale = get_scale();
-        end_scale = max_size;
-
-        start_rotation = rotation_angle;
-        end_rotation = get_rotation_degrees();
-    }
-
-    if(reverse_fade) {
-        start_opacity = 0.0;
-        end_opacity = get_modulate().a;
-    }
-    else {
-        start_opacity = get_modulate().a;
-        end_opacity = 0.0;
-    }
 }
 
 void FadingSprite::_physics_process(double delta) {
@@ -133,7 +106,37 @@ double FadingSprite::get_animation_duration() const {
     return animation_duration;
 }
 
-void FadingSprite::start_animation() {
+void FadingSprite::start_animation(bool p_reverse_animation, bool p_reverse_fade) {
+    reverse_animation = p_reverse_animation;
+    reverse_fade = p_reverse_fade;
+
+    // Handle reverse fade and reverse animation logic
+    if(reverse_fade) {
+        start_opacity = 0.0;
+        end_opacity = get_modulate().a;
+    }
+    else {
+        start_opacity = get_modulate().a;
+        end_opacity = 0.0;
+    }
+
+    // Max size is multiplied by get scale to have it be relative to scale set in editor
+    if(reverse_animation) {
+        start_scale = max_size * get_scale();
+        end_scale = get_scale();
+
+        start_rotation = get_rotation_degrees();
+        end_rotation = rotation_angle;
+    }
+    else {
+
+        start_scale = get_scale();
+        end_scale = max_size * get_scale();
+
+        start_rotation = rotation_angle;
+        end_rotation = get_rotation_degrees();
+    }
+
     is_animating = true;
     animation_timer = 0.0;
 }

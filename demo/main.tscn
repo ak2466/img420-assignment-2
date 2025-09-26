@@ -182,7 +182,7 @@ shape = SubResource("RectangleShape2D_03owx")
 
 [node name="FadeAnim" type="FadingSprite" parent="ExtendTimeArea"]
 rotation_angle = 360.0
-max_size = Vector2(100, 100)
+max_size = Vector2(2.5, 2.5)
 position = Vector2(199, -131)
 texture = ExtResource("8_c6i3y")
 
@@ -195,6 +195,8 @@ position = Vector2(621, -171)
 shape = SubResource("RectangleShape2D_3dxm6")
 
 [node name="FadeAnim" type="FadingSprite" parent="WinArea"]
+rotation_angle = 360.0
+max_size = Vector2(2.5, 2.5)
 position = Vector2(621.04, -171.04)
 scale = Vector2(0.0545313, 0.0545313)
 texture = ExtResource("12_dg77c")
@@ -202,6 +204,9 @@ texture = ExtResource("12_dg77c")
 [connection signal="pause_requested" from="CanvasLayer/PauseMenu" to="Player" method="_on_pause_menu_pause_requested"]
 [connection signal="start_game" from="CanvasLayer/WinScreen" to="Player" method="_on_win_screen_start_game"]
 [connection signal="pressed" from="CanvasLayer/PauseButton" to="Player" method="_on_pause_button_pressed"]
+[connection signal="game_started" from="Player" to="CanvasLayer/FailedMenu" method="_on_player_game_started"]
+[connection signal="game_started" from="Player" to="ExtendTimeArea" method="_on_player_game_started"]
+[connection signal="game_started" from="Player" to="WinArea" method="_on_player_game_started"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="ExtendTimeArea" to="Player" method="_on_extend_time_area_body_entered"]
 [connection signal="body_entered" from="ExtendTimeArea" to="ExtendTimeArea" method="_on_body_entered"]

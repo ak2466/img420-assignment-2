@@ -41,8 +41,7 @@ public:
     ~FadingSprite();
 
     void _physics_process(double delta) override;
-    void _enter_tree() override;
-    void start_animation();
+    void start_animation(bool reverse_animation, bool reverse_fade);
 
     void set_animation_duration(const double p_animation_duration);
     double get_animation_duration() const;
